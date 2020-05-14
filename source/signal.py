@@ -1,8 +1,4 @@
-import matplotlib.pyplot as plt
 import numpy as np
-import seaborn as sns
-
-sns.set()
 
 class Signal():
 
@@ -23,14 +19,14 @@ class Signal():
 
         self._generate_signal(N)
 
-    def plot_real_signal_part(self):
+    def plot_real_signal_part(self, plt):
         plt.plot(self.t, self.y.real)
         plt.xlabel('$t$')
         plt.ylabel('$y(t)$')
         plt.title('Signal\'s real part')
         plt.show()
 
-    def plot_spectar(self):
+    def plot_spectar(self, plt):
         all_w = np.arange(-np.pi, np.pi, 100)
 
         plt.plot(
@@ -47,6 +43,13 @@ class Signal():
         plt.title('Signal\'s real PSD')
         plt.legend()
         plt.show()
+
+    def show_w(self, plt):
+        plt.plot(
+            self.w, np.zeros(self.n), label='real $\omega$',
+            marker='D', linewidth=0, color='maroon'
+        )
+        return plt
 
     def _generate_signal(self, N):
         self.t = np.arange(0, N * self.Ts, self.Ts)
