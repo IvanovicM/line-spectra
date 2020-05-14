@@ -47,7 +47,7 @@ class Signal():
     def show_w(self, plt):
         plt.plot(
             self.w, np.zeros(self.n), label='real $\omega$',
-            marker='D', linewidth=0, color='maroon'
+            marker='D', markersize=9, linewidth=0, color='goldenrod'
         )
         return plt
 
