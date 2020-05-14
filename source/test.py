@@ -8,7 +8,7 @@ sns.set()
 
 def plot_real_and_estimated_w(sig, method):
     sig_plt = sig.show_w(plt)
-    method_plt = method.show_w(plt)
+    method_plt = method.show_w(sig_plt)
 
     method_plt.xlabel('$\omega$')
     method_plt.legend()
@@ -23,5 +23,5 @@ if __name__ == '__main__':
 
     # Apply methods and plot results
     ms = MUSIC()
-    ms.apply(sig)
+    ms.estimate(sig)
     plot_real_and_estimated_w(sig, ms)

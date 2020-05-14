@@ -11,7 +11,7 @@ class MUSIC():
         self.n = 3
         self.w = np.array([-1.4, 0, 1.6])
 
-    def apply(self, sig):
+    def estimate(self, sig):
         pass
 
     def show_w(self, plt):
