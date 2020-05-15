@@ -15,4 +15,5 @@ if __name__ == '__main__':
     # Apply methods and plot results
     ms = MUSIC()
     ms.estimate(sig)
+    ms.plot_pseudo_spectrum(plt)
     ms.plot_w(plt)
