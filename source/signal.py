@@ -44,13 +44,6 @@ class Signal():
         plt.legend()
         plt.show()
 
-    def show_w(self, plt):
-        plt.plot(
-            self.w, np.zeros(self.n), label='real $\omega$',
-            marker='D', markersize=9, linewidth=0, color='goldenrod'
-        )
-        return plt
-
     def _generate_signal(self, N):
         self.t = np.arange(0, N * self.Ts, self.Ts)
         self.y = np.zeros(N, dtype=complex)

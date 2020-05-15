@@ -8,15 +8,22 @@ class MUSIC():
         self.type = 'MUSIC'
 
         # --- For testing ---
-        self.n = 3
         self.w = np.array([-1.4, 0, 1.6])
 
-    def estimate(self, sig):
-        pass
+    def estimate(self, sig, m=10):
+        self.sig = sig
 
-    def show_w(self, plt):
+    def plot_w(self, plt):
         plt.plot(
-            self.w, np.zeros(self.n), label='estimated $\omega$',
+            self.sig.w, np.zeros(self.sig.n), label='real $\omega$',
+            marker='D', markersize=9, linewidth=0, color='goldenrod'
+        )
+        plt.plot(
+            self.w, np.zeros(self.sig.n), label='estimated $\omega$',
             marker='X', linewidth=0, color='maroon'
         )
-        return plt
+
+        plt.xlabel('$\omega$')
+        plt.legend()
+        plt.title('Real and estimated $\omega$ with {}'.format(self.type))
+        plt.show()
