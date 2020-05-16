@@ -19,6 +19,7 @@ class MUSIC():
         self._estimate_cov_matrix()
         self._eig_decomp()
         self._estimate_pseudo_spectrum()
+        self._remember_spectrum_peaks()
 
     def plot_w(self, plt):
         plt.plot(
@@ -83,6 +84,7 @@ class MUSIC():
             else:
                 self.pseudo_spectrum[i] = 1 / div_with.real
 
+    def _remember_spectrum_peaks(self):
         w_peaks_idx,_ = find_peaks(self.pseudo_spectrum)
         w_max_idx = w_peaks_idx
         if len(w_peaks_idx) > self.sig.n:
