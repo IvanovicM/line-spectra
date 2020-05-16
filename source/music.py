@@ -83,8 +83,15 @@ class MUSIC():
             else:
                 self.pseudo_spectrum[i] = 1 / div_with.real
 
-        w_idx,_ = find_peaks(self.pseudo_spectrum)
-        self.w = np.array([self.all_w[w_idx]][0])
+        w_peaks_idx,_ = find_peaks(self.pseudo_spectrum)
+        w_max_idx = w_peaks_idx
+        if len(w_peaks_idx) > self.sig.n:
+            peaks = np.array([self.pseudo_spectrum[w_max_idx]][0])
+            w_peaks = np.array([self.all_w[w_max_idx]][0])
+            w_max_idx = np.array([
+                w_max_idx[peaks.argsort()[-self.sig.n:][::-1]]
+            ][0])
+        self.w = np.array([self.all_w[w_max_idx]][0])
 
     def _get_response_vector(self, w):
         a = np.zeros(self.m, dtype=complex)
