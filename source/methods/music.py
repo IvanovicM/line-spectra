@@ -1,17 +1,15 @@
 import numpy as np
 
+from .abstract import AbstractMethod
 from math import sqrt
 from scipy.signal import find_peaks
 
-class MUSIC():
+class MUSIC(AbstractMethod):
 
     def __init__(self):
+        super(MUSIC, self).__init__()
         self.type = 'MUSIC'
-        self.all_w = np.linspace(-np.pi, np.pi, 100)
         self.pseudo_spectrum = None
-
-        # --- For testing ---
-        self.w = np.array([-1.4, 0, 1.6])
 
     def estimate(self, sig, m=5):
         self.sig = sig
@@ -20,21 +18,6 @@ class MUSIC():
         self._eig_decomp()
         self._estimate_pseudo_spectrum()
         self._remember_spectrum_peaks()
-
-    def plot_w(self, plt):
-        plt.plot(
-            self.sig.w, np.zeros(self.sig.n), label='real $\omega$',
-            marker='D', markersize=9, linewidth=0, color='goldenrod'
-        )
-        plt.plot(
-            self.w, np.zeros(len(self.w)), label='estimated $\omega$',
-            marker='X', linewidth=0, color='maroon'
-        )
-
-        plt.xlabel('$\omega$')
-        plt.legend()
-        plt.title('Real and estimated $\omega$ with {}'.format(self.type))
-        plt.show()
 
     def plot_pseudo_spectrum(self, plt):
         if self.pseudo_spectrum is None:
@@ -46,11 +29,11 @@ class MUSIC():
 
     def _estimate_cov_matrix(self):
         N = len(self.sig.y)
-        self.R = np.zeros((self.m, self.m), dtype=complex)
+        self.R = np.zeros((self.m, self.m))
 
         for t in np.arange(self.m, N):
             y_tilde = np.matrix(self.sig.y[t-self.m : t]).T
-            self.R += y_tilde * y_tilde.H
+            self.R += (y_tilde * y_tilde.H).real
         self.R /= N
 
     def _eig_decomp(self):
@@ -94,9 +77,3 @@ class MUSIC():
                 w_max_idx[peaks.argsort()[-self.sig.n:][::-1]]
             ][0])
         self.w = np.array([self.all_w[w_max_idx]][0])
-
-    def _get_response_vector(self, w):
-        a = np.zeros(self.m, dtype=complex)
-        for i in range(self.m):
-            a[i] = np.exp(-1j * i * w)
-        return np.matrix(a).T

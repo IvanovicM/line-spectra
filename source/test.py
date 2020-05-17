@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-from music import MUSIC
+from methods.music import MUSIC
 from signal import Signal
 
 sns.set()
