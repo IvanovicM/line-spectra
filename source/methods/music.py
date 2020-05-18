@@ -29,20 +29,15 @@ class MUSIC(AbstractMethod):
 
     def _estimate_cov_matrix(self):
         N = len(self.sig.y)
-        self.R = np.zeros((self.m, self.m))
+        self.R = np.zeros((self.m, self.m), dtype='complex')
 
         for t in np.arange(self.m, N):
             y_tilde = np.matrix(self.sig.y[t-self.m : t]).T
-            self.R += (y_tilde * y_tilde.H).real
+            self.R += y_tilde * y_tilde.H
         self.R /= N
 
     def _eig_decomp(self):
-        w, v = np.linalg.eig(self.R)
-        ziped = [(a,b) for (a,b) in sorted(zip(w,v), key=lambda p: -p[0].real)]
-        eig_values = [x for x, _ in list(ziped)]
-        eig_values = np.array([x for x in eig_values])
-        eig_vectors = [x for _, x in list(ziped)]
-        eig_vectors = np.matrix([x for x in eig_vectors])
+        eig_values, eig_vectors = np.linalg.eig(self.R)
 
         # Estimate noise std
         lambda_sigma_n = eig_values[self.sig.n :]
@@ -52,8 +47,8 @@ class MUSIC(AbstractMethod):
         )
         
         # Form S and G
-        self.S = eig_vectors[: self.sig.n].T
-        self.G = eig_vectors[self.sig.n :].T
+        self.S = np.matrix(eig_vectors[:, : self.sig.n])
+        self.G = np.matrix(eig_vectors[:, self.sig.n :])
 
     def _estimate_pseudo_spectrum(self):
         self.pseudo_spectrum = np.zeros(len(self.all_w))
@@ -61,11 +56,7 @@ class MUSIC(AbstractMethod):
             w = self.all_w[i]
             a = self._get_response_vector(w)
 
-            div_with = a.H * self.G * self.G.H * a
-            if div_with.real == 0:
-                self.pseudo_spectrum[i] = 100
-            else:
-                self.pseudo_spectrum[i] = 1 / div_with.real
+            self.pseudo_spectrum[i] = 1.0 / np.linalg.norm(self.G.H * a)
 
     def _remember_spectrum_peaks(self):
         w_peaks_idx,_ = find_peaks(self.pseudo_spectrum)

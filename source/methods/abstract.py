@@ -24,7 +24,5 @@ class AbstractMethod():
         plt.show()
 
     def _get_response_vector(self, w):
-        a = np.zeros(self.m, dtype=complex)
-        for i in range(self.m):
-            a[i] = np.exp(-1j * i * w)
+        a = np.exp(-1j * w * np.arange(0, self.m))
         return np.matrix(a).T
