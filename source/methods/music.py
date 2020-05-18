@@ -11,9 +11,10 @@ class MUSIC(AbstractMethod):
         self.type = 'MUSIC'
         self.pseudo_spectrum = None
 
-    def estimate(self, sig, m=5):
+    def estimate(self, sig, m=None):
         self.sig = sig
-        self.m = m
+        self.m = m if m is not None else len(self.sig.y) // 2
+
         self._estimate_cov_matrix()
         self._eig_decomp()
         self._estimate_pseudo_spectrum()

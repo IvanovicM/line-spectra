@@ -4,7 +4,7 @@ class AbstractMethod():
 
     def __init__(self):
         self.all_w = np.linspace(-np.pi, np.pi, 100)
-
+        
     def estimate(self, sig):
         pass
 
@@ -24,5 +24,5 @@ class AbstractMethod():
         plt.show()
 
     def _get_response_vector(self, w):
-        a = np.exp(-1j * w * np.arange(0, self.m))
+        a = np.exp(-1j * w * np.arange(0, self.m) * self.sig.Ts)
         return np.matrix(a).T
