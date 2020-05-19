@@ -14,7 +14,7 @@ class Signal():
         )
         self.theta = (
             np.array(theta) if theta is not None
-            else np.pi * (np.random.randn(self.n)-1/2) 
+            else np.pi * (2*np.random.rand(10) - 1)
         )
 
         self._generate_signal(N)
@@ -26,7 +26,7 @@ class Signal():
         plt.title('Signal\'s real part')
         plt.show()
 
-    def plot_spectar(self, plt):
+    def plot_spectar(self, plt, show=True):
         all_w = np.arange(-np.pi, np.pi, 100)
 
         plt.plot(
@@ -42,7 +42,8 @@ class Signal():
         plt.ylabel('$S(\omega)$')
         plt.title('Signal\'s real PSD')
         plt.legend()
-        plt.show()
+        plt.show() if show else None
+        return plt
 
     def _generate_signal(self, N):
         self.t = np.arange(0, N * self.Ts, self.Ts)

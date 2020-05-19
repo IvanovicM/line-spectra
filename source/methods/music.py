@@ -34,7 +34,7 @@ class MUSIC(AbstractMethod):
         self.R = np.zeros((self.m, self.m), dtype='complex')
 
         for t in np.arange(self.m, N):
-            y_tilde = np.matrix(self.sig.y[t-self.m : t]).T
+            y_tilde = np.matrix(self.sig.y[t-self.m : t][::-1]).T
             self.R += y_tilde * y_tilde.H
         self.R /= N
 

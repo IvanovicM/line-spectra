@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import numpy as np
 import seaborn as sns
 
 from methods.music import MUSIC
@@ -8,12 +9,14 @@ sns.set()
 
 if __name__ == '__main__':
     # Generate and show signal
-    sig = Signal(w=[-2.5, -1, 0, 1, 2.5], sigma_n=1)
+    w = np.pi * np.array([-0.4, -0.1, 0.15, -0.8, -0.6, 0.6])
+    sig = Signal(w=w, sigma_n=1)
     # sig.plot_real_signal_part(plt)
-    # sig.plot_spectar(plt)
+    #sig.plot_spectar(plt)
 
     # Apply methods and plot results
     ms = MUSIC()
-    ms.estimate(sig, m=10)
+    ms.estimate(sig)
+    sig.plot_spectar(plt, False)
     ms.plot_pseudo_spectrum(plt)
     ms.plot_w(plt)
