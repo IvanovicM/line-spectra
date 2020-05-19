@@ -2,7 +2,7 @@ import numpy as np
 
 class Signal():
 
-    def __init__(self, w, sigma_n, alpha=None, theta=None, N=100, Ts=0.1):
+    def __init__(self, w, sigma_n, alpha=None, theta=None, N=100, Ts=1):
         self.n = len(w)
         self.w = np.array(w)
         self.sigma_n = sigma_n

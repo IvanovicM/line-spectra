@@ -11,11 +11,12 @@ class MUSIC(AbstractMethod):
         self.type = 'MUSIC'
         self.pseudo_spectrum = None
 
-    def estimate(self, sig, m=None):
+    def estimate(self, sig, m=None, toeplitz_correct=False):
         self.sig = sig
         self.m = m if m is not None else len(self.sig.y) // 2
 
         self._estimate_cov_matrix()
+        self._toeplitz_correction() if toeplitz_correct else None
         self._eig_decomp()
         self._estimate_pseudo_spectrum()
         self._remember_spectrum_peaks()
@@ -36,6 +37,21 @@ class MUSIC(AbstractMethod):
             y_tilde = np.matrix(self.sig.y[t-self.m : t]).T
             self.R += y_tilde * y_tilde.H
         self.R /= N
+
+    def _toeplitz_correction(self):
+        R_sum = np.zeros((2*self.m - 1, 1), dtype='complex')
+        padd = self.m - 1
+
+        for i in range(self.m):
+            for j in range(self.m):
+                R_sum[i - j + padd] += self.R[i][j]
+        for i in range(self.m):
+            for j in range(self.m):
+                self.R[i][j] = (
+                    self.R[i][j] / R_sum[i - j + padd]
+                    if R_sum[i - j + padd] != 0
+                    else self.R[i][j]
+                )
 
     def _eig_decomp(self):
         eig_values, eig_vectors = np.linalg.eig(self.R)
