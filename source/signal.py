@@ -27,10 +27,8 @@ class Signal():
         plt.show()
 
     def plot_spectar(self, plt, show=True):
-        all_w = np.arange(-np.pi, np.pi, 100)
-
         plt.plot(
-            [-np.pi, np.pi], [self.sigma_n**2, self.sigma_n**2],
+            [-np.pi/2, np.pi/2], [self.sigma_n**2, self.sigma_n**2],
             color='#1f77b4', label='noise'
         )
         plt.stem(
