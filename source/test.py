@@ -5,7 +5,9 @@ import seaborn as sns
 from methods.music import MUSIC
 from signal import Signal
 
-sns.set()
+sns.set_style("whitegrid")
+sns.despine(left=True, bottom=True)
+sns.set_context("poster", font_scale = .45, rc={"grid.linewidth": 0.8})
 
 def get_real_test_signal():
     w = np.pi * np.array([-0.4, -0.2, -0.15, 0, 0.15, 0.2, 0.4])

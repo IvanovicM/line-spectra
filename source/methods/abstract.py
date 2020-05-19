@@ -15,7 +15,7 @@ class AbstractMethod():
         )
         plt.plot(
             self.w, np.zeros(len(self.w)), label='estimated $\omega$',
-            marker='X', linewidth=0, color='maroon'
+            marker='X', markersize=6, linewidth=0, color='maroon'
         )
 
         plt.xlabel('$\omega$')
