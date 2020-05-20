@@ -26,7 +26,7 @@ class MUSIC(AbstractMethod):
             return
         plt.plot(self.all_w, self.pseudo_spectrum.real)
         plt.xlabel('$\omega$')
-        plt.title('MUSIC Pseudo Spectrum')
+        plt.title('{} Pseudo Spectrum'.format(self.type))
         plt.show()
 
     def _estimate_cov_matrix(self):

@@ -23,16 +23,21 @@ def get_imag_test_signal(show=True):
     sig.plot_spectar(plt) if show else None
     return sig
 
-def method_results(method, signals):
+def method_results(method, signals, show=True):
+    results = []
     for sig in signals:
         method.estimate(sig)
-        method.plot_pseudo_spectrum(plt)
-        method.plot_w(plt)
-        print('Noise std estimation: {:.2f}'.format(method.sigma_n))
+        results.append(method.w)
+        if show:
+            method.plot_pseudo_spectrum(plt)
+            method.plot_w(plt)
+            print('Noise std estimation: {:.2f}'.format(method.sigma_n))
+            
+    return np.array(results)
 
 if __name__ == '__main__':
-    real_sig = get_real_test_signal()
-    imag_sig = get_imag_test_signal()
+    real_sig = get_real_test_signal(False)
+    imag_sig = get_imag_test_signal(False)
 
-    ms = MinNorm()
-    method_results(ms, [real_sig, imag_sig])
+    for method in [MUSIC(), MinNorm()]:
+        method_results(method, [real_sig, imag_sig], True)
