@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
 
+from methods.minnorm import MinNorm
 from methods.music import MUSIC
 from signal import Signal
 
@@ -33,5 +34,5 @@ if __name__ == '__main__':
     real_sig = get_real_test_signal()
     imag_sig = get_imag_test_signal()
 
-    ms = MUSIC()
+    ms = MinNorm()
     method_results(ms, [real_sig, imag_sig])
