@@ -3,7 +3,7 @@ import numpy as np
 class AbstractMethod():
 
     def __init__(self):
-        self.all_w = np.linspace(-np.pi/2, np.pi/2, 100)
+        self.all_w = np.linspace(-np.pi, np.pi, 100)
         
     def estimate(self, sig):
         pass
