@@ -61,3 +61,7 @@ class MUSIC(AbstractMethod):
                 w_max_idx[peaks.argsort()[-self.sig.n:][::-1]]
             ][0])
         self.w = np.array([self.all_w[w_max_idx]][0])
+
+    def _get_response_vector(self, w):
+        a = np.exp(-1j * w * np.arange(0, self.m) * self.sig.Ts)
+        return np.matrix(a).T

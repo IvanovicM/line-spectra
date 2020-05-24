@@ -47,7 +47,3 @@ class AbstractMethod():
         # Form S and G
         self.S = np.matrix(eig_vectors[:, : self.sig.n])
         self.G = np.matrix(eig_vectors[:, self.sig.n :])
-
-    def _get_response_vector(self, w):
-        a = np.exp(-1j * w * np.arange(0, self.m) * self.sig.Ts)
-        return np.matrix(a).T
