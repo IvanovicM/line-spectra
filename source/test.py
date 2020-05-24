@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
 
+from methods.esprit import ESPRIT
 from methods.minnorm import MinNorm
 from methods.music import MUSIC
 from signal import Signal
@@ -29,7 +30,7 @@ def method_results(method, signals, show=True):
         method.estimate(sig)
         results.append(method.w)
         if show:
-            method.plot_pseudo_spectrum(plt)
+            method.plot_pseudo_spectrum(plt) if method.type!= 'ESPRIT' else None
             method.plot_w(plt)
             print('Noise std estimation: {:.2f}'.format(method.sigma_n))
             
@@ -39,5 +40,5 @@ if __name__ == '__main__':
     real_sig = get_real_test_signal(False)
     imag_sig = get_imag_test_signal(False)
 
-    for method in [MUSIC(), MinNorm()]:
+    for method in [MUSIC(), MinNorm(), ESPRIT()]:
         method_results(method, [real_sig, imag_sig], True)
