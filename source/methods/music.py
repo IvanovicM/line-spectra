@@ -1,7 +1,6 @@
 import numpy as np
 
 from .abstract import AbstractMethod
-from math import sqrt
 from scipy.signal import find_peaks
 
 class MUSIC(AbstractMethod):
@@ -29,15 +28,6 @@ class MUSIC(AbstractMethod):
         plt.title('{} Pseudo Spectrum'.format(self.type))
         plt.show()
 
-    def _estimate_cov_matrix(self):
-        N = len(self.sig.y)
-        self.R = np.zeros((self.m, self.m), dtype='complex')
-
-        for t in np.arange(self.m, N):
-            y_tilde = np.matrix(self.sig.y[t-self.m : t][::-1]).T
-            self.R += y_tilde * y_tilde.H
-        self.R /= N
-
     def _toeplitz_correction(self):
         R_sum = np.zeros((2*self.m - 1, 1), dtype='complex')
         padd = self.m - 1
@@ -52,20 +42,6 @@ class MUSIC(AbstractMethod):
                     if R_sum[i - j + padd] != 0
                     else self.R[i][j]
                 )
-
-    def _eig_decomp(self):
-        eig_values, eig_vectors = np.linalg.eig(self.R)
-
-        # Estimate noise std
-        lambda_sigma_n = eig_values[self.sig.n :]
-        self.sigma_n = (
-            sqrt(np.mean(lambda_sigma_n.real)) if len(lambda_sigma_n) > 1
-            else lambda_sigma_n.real
-        )
-        
-        # Form S and G
-        self.S = np.matrix(eig_vectors[:, : self.sig.n])
-        self.G = np.matrix(eig_vectors[:, self.sig.n :])
 
     def _estimate_pseudo_spectrum(self):
         self.pseudo_spectrum = np.zeros(len(self.all_w))
