@@ -1,8 +1,8 @@
 # Signal analysis for line spectra signals
 
-Various algorithms for spectral estimation of line spectra, such as
+Various algorithms for line spectra estimation, such as
 * MUltiple SIgnal Classification (**MUSIC**) method 
-* Min Norm method
+* **Min Norm** method
 * Estimation of Signal Parameters via Rational Invariance Techniques (**ESPRIT**) method
 
 Based on the book "Spectral Analysis of Signals", P. Stoica &amp; R. Moses
