@@ -6,7 +6,7 @@ from methods.esprit import ESPRIT
 from methods.minnorm import MinNorm
 from methods.music import MUSIC
 from signal import Signal
-from utils import generate_signal
+from utils import generate_signal, apply_method
 
 sns.set_style("whitegrid")
 sns.despine(left=True, bottom=True)
@@ -26,11 +26,6 @@ def get_imag_test_signal(show=True):
     sig = Signal(y=y, n=len(w), w=w)
     sig.plot_spectar(plt) if show else None
     return sig
-
-def apply_method(method, sig, show=True):
-    method.estimate(sig)
-    method.plot_pseudo_spectrum(plt) if method.type != 'ESPRIT' else None
-    method.plot_w(plt)
             
 if __name__ == '__main__':
     test_signal_1 = get_real_test_signal(True)

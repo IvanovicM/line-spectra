@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 import numpy as np
 
 def generate_signal(w, sigma_n, alpha=None, theta=None, Ts=1, N=100):
@@ -35,3 +36,12 @@ def generate_signal(w, sigma_n, alpha=None, theta=None, Ts=1, N=100):
             y[i] += alpha[k] * np.exp(1j * (w[k] * t[i] + theta[k]))
         y[i] += sigma_n * np.random.randn()
     return y
+
+def apply_method(method, sig, show=True):
+    ''' 
+        Applies method to a given signal.
+        Additionally, plots resuls if flag show is set to true.
+    '''
+    method.estimate(sig)
+    method.plot_pseudo_spectrum(plt) if method.type != 'ESPRIT' else None
+    method.plot_w(plt)
