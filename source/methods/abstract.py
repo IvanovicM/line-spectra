@@ -14,7 +14,7 @@ class AbstractMethod():
         plt.plot(
             self.sig.w, np.zeros(self.sig.n), label='real $\omega$',
             marker='D', markersize=9, linewidth=0, color='goldenrod'
-        )
+        ) if self.sig.w is not None else None
         plt.plot(
             self.w, np.zeros(len(self.w)), label='estimated $\omega$',
             marker='X', markersize=6, linewidth=0, color='maroon'
