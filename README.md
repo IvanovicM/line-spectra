@@ -13,7 +13,7 @@ To illustrate the results, let's look at the testing signal's real and pseudo sp
 
 | <img src="images/real_spectum.png"> | <img src="images/music_pseudo_spectrum.png">|
 |:---:|:---:|
-| Real spectrum | Pseudo Spectrum (MUSIC) |
+| Real spectrum | Pseudo spectrum (MUSIC) |
 
 Below you can see real and estimated values of sinusoidal components. Note that the results of Min Norm method is very similar.
 
